@@ -48,6 +48,13 @@ function Thermostat() {
     this.powerSaving = false;
   };
 
+  this.toggleEco=function() {
+    this.powerSaving = !this.powerSaving
+    if ((this.powerSaving)&&(this.temperature > POWER_SAVING_MODE_ON_MAX_TEMPERATURE)) {
+      this.temperature = POWER_SAVING_MODE_ON_MAX_TEMPERATURE;
+    }
+  };
+
   this.resetTemperature=function() {
     this.temperature = START_TEMPERATURE;
   };

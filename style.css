@@ -9,3 +9,11 @@
 .high_usage  {
   color: red;
 }
+
+.eco_on  {
+  background-color: #000000;
+}
+
+.eco_off  {
+  background-color: #FFFFFF;
+}

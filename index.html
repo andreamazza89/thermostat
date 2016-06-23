@@ -5,31 +5,30 @@
     <script src='src/Thermostat.js'></script>
     <script src='src/jquery.js'></script>
     <script src='src/interface.js'></script>
-    <script src='src/justgage.js'></script>
-    <script src='src/raphael-2.1.4.min.js'></script>
+    <script src='src/knob.js'></script>
 
     <link rel="stylesheet" href="style.css">
 
   </head>
-  <body>
-    <div id="gauge" style="width: 700px; height: 500px; background-color: #25B2B2"></div>
-    <h1 id='temperature'></h1>
-    <button id='increase'>+</button>
-    <button id='decrease'>-</button>
-    <button id='reset'>reset</button>
-    Power saving: <span id='PSM_status'></span>
-    <button id='PSM_on'>PSM on</button>
-    <button id='PSM_off'>PSM_off</button>
 
-    <h2 id="city"></h2>
-    Current temperature: <span id="city_temp"></span><br>
-    <select id="city_list">
-      <option value="england/London">London</option>
-      <option value="france/Paris" id="paris">Paris</option>
-      <option value="NY/NewYork">New York</option>
-      <option value="Germany/Berlin">Berlin</option>
-      <option value="Italy/Rome">Rome</option>
-    </select>
+  <body>
+    <div>
+      <input type='text' value='20' class='dial'>
+      <button id='increase'>+</button>
+      <button id='decrease'>-</button>
+      <button id='reset'>reset</button>
+      <button id='eco'>eco</button>
+    </div>
+
+  <!--      <h2 id="city"></h2>
+        Current temperature: <span id="city_temp"></span><br>
+        <select id="city_list">
+          <option value="england/London">London</option>
+          <option value="france/Paris" id="paris">Paris</option>
+          <option value="NY/NewYork">New York</option>
+          <option value="Germany/Berlin">Berlin</option>
+          <option value="Italy/Rome">Rome</option>
+        </select>      -->
   </body>
 
 </html>

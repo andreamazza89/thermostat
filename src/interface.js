@@ -4,77 +4,72 @@ $(document).ready(function(){
 
   thermostat = new Thermostat();
   var thermostat;
-
-  apiCall();
+  //apiCall();
+  updateTemperature();
+  //refactor below please
+  thermostat.powerSaving ? $('#eco').attr('class', 'eco_on') : $('#eco').attr('class', 'eco_off');
 
   function updateTemperature() {
     $('#temperature').text(thermostat.getCurrentTemperature());
     $('#temperature').attr('class',thermostat.energyUsage());
+    $('.dial').val(thermostat.getCurrentTemperature()).trigger('change')
   }
 
-  updateTemperature();
-  thermostat.powerSaving ? $('#PSM_status').text('on') : $('#PSM_status').text('off');
+  $('.dial').knob({
+    'min': 10,
+    'max': 32,
+    'readOnly': true,
+    'angleArc': 270,
+    'angleOffset': -135,
+  });
 
   $('#increase').on('click', function(){
     thermostat.increaseTemperature();
     updateTemperature();
-    g.refresh(thermostat.getCurrentTemperature());
   })
 
   $('#decrease').on('click', function(){
     thermostat.decreaseTemperature();
     updateTemperature();
-    g.refresh(thermostat.getCurrentTemperature());
   })
 
   $('#reset').on('click', function(){
     thermostat.resetTemperature();
     updateTemperature();
-    g.refresh(thermostat.getCurrentTemperature());
   })
 
-  $('#PSM_on').on('click', function(){
-    thermostat.enablePowerSavingMode();
+  $('#eco').on('click', function(){
+    toggleEcoButton();
+  })
+
+//  function apiCall()  {
+//    var stateCity;
+//    var city;
+//    stateCity = $('#city_list').val();
+//    city = $("option[value='" + stateCity + "']").text();
+//    $('#city').text(city);
+//
+//
+//    $.ajax({
+//      url : "http://api.wunderground.com/api/47d299c55b24b723/geolookup/conditions/q/" + stateCity + ".json",
+//      dataType : "jsonp",
+//      success : function(parsed_json) {
+//        var location = parsed_json['location']['city'];
+//        var temp_c = parsed_json['current_observation']['temp_c'];
+//        $('#city_temp').text(temp_c);
+//      }
+//    });
+//  }
+
+ // $('#city_list').change(function(){
+ //   apiCall();
+ // });
+
+  function toggleEcoButton() {
+    thermostat.toggleEco();
+    //refactor below please
+    thermostat.powerSaving ? $('#eco').attr('class', 'eco_on') : $('#eco').attr('class', 'eco_off');
     updateTemperature();
-    $('#PSM_status').text('on')
-    g.refresh(thermostat.getCurrentTemperature());
-  })
-
-  $('#PSM_off').on('click', function(){
-    thermostat.disablePowerSavingMode();
-    $('#PSM_status').text('off')
-  })
-
-
-  function apiCall()  {
-    var stateCity;
-    var city;
-    stateCity = $('#city_list').val();
-    city = $("option[value='" + stateCity + "']").text();
-    $('#city').text(city);
-
-
-    $.ajax({
-      url : "http://api.wunderground.com/api/47d299c55b24b723/geolookup/conditions/q/" + stateCity + ".json",
-      dataType : "jsonp",
-      success : function(parsed_json) {
-        var location = parsed_json['location']['city'];
-        var temp_c = parsed_json['current_observation']['temp_c'];
-        $('#city_temp').text(temp_c);
-      }
-    });
   }
-
-  $('#city_list').change(function(){
-    apiCall();
-  });
-
-  var g = new JustGage({
-    id: "gauge",
-    value: 20,
-    min: 10,
-    max: 32,
-    title: "Thermostat"
-  });
 
 });
