@@ -4,7 +4,7 @@ $(document).ready(function(){
 
   thermostat = new Thermostat();
   var thermostat;
-  //apiCall();
+  apiCall();
   updateTemperature();
   //refactor below please
   thermostat.powerSaving ? $('#eco').attr('class', 'eco_on') : $('#eco').attr('class', 'eco_off');
@@ -42,28 +42,28 @@ $(document).ready(function(){
     toggleEcoButton();
   })
 
-//  function apiCall()  {
-//    var stateCity;
-//    var city;
-//    stateCity = $('#city_list').val();
-//    city = $("option[value='" + stateCity + "']").text();
-//    $('#city').text(city);
-//
-//
-//    $.ajax({
-//      url : "http://api.wunderground.com/api/47d299c55b24b723/geolookup/conditions/q/" + stateCity + ".json",
-//      dataType : "jsonp",
-//      success : function(parsed_json) {
-//        var location = parsed_json['location']['city'];
-//        var temp_c = parsed_json['current_observation']['temp_c'];
-//        $('#city_temp').text(temp_c);
-//      }
-//    });
-//  }
+  function apiCall()  {
+    var stateCity;
+    var city;
+    stateCity = $('#city_list').val();
+    city = $("option[value='" + stateCity + "']").text();
+    $('#city').text(city);
 
- // $('#city_list').change(function(){
- //   apiCall();
- // });
+
+    $.ajax({
+      url : "http://api.wunderground.com/api/47d299c55b24b723/geolookup/conditions/q/" + stateCity + ".json",
+      dataType : "jsonp",
+      success : function(parsed_json) {
+        var location = parsed_json['location']['city'];
+        var temp_c = parsed_json['current_observation']['temp_c'];
+        $('#city_temp').text(temp_c);
+      }
+    });
+  }
+
+ $('#city_list').change(function(){
+   apiCall();
+ });
 
   function toggleEcoButton() {
     thermostat.toggleEco();
