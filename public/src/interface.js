@@ -9,10 +9,15 @@ $(document).ready(function(){
   //refactor below please
   thermostat.powerSaving ? $('#eco').attr('class', 'eco_on') : $('#eco').attr('class', 'eco_off');
 
+    function writeTemperature(temperature) {
+      $('#temperature').text(temperature)
+    }
+
   function updateTemperature() {
-    $('#temperature').text(thermostat.getCurrentTemperature());
-    $('#temperature').attr('class',thermostat.energyUsage());
-    $('.dial').val(thermostat.getCurrentTemperature()).trigger('change')
+
+    thermostat.getCurrentTemperature(writeTemperature);
+   // $('#temperature').attr('class',thermostat.energyUsage());
+    //$('.dial').val(thermostat.getCurrentTemperature()).trigger('change')
   }
 
   $('.dial').knob({
@@ -24,8 +29,18 @@ $(document).ready(function(){
   });
 
   $('#increase').on('click', function(){
-    thermostat.increaseTemperature();
-    updateTemperature();
+
+    thermostat.getCurrentTemperature(postTemperature);
+
+    function postTemperature(t) {
+
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:9292/temperature/' + (t + 1),
+        success: updateTemperature()
+      });
+    }
+    
   })
 
   $('#decrease').on('click', function(){

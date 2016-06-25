@@ -1,5 +1,6 @@
 'use strict';
 
+
 function Thermostat() {
 
   const LOW_ENERGY_THRESHOLD = 18;
@@ -18,7 +19,7 @@ function Thermostat() {
   };
 
   this.powerSaving = true;
-  this.temperature = START_TEMPERATURE;
+  this.temperature;
 
 
   this.decreaseTemperature= function() {
@@ -27,9 +28,17 @@ function Thermostat() {
     }
   };
 
-  this.getCurrentTemperature= function() {
-    return this.temperature;
-  };
+
+  this.getCurrentTemperature= function(callback) {
+
+      $.ajax({
+        url: 'http://localhost:9292/temperature',
+        success: function(temperature) {
+          callback(temperature.temperature);
+        }
+      });
+
+  }
 
   this.increaseTemperature= function() {
     if(!isMaximumTemperature(this.powerSaving, this.temperature)) {
